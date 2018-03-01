@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Benjamin Young</title>
+		<link rel="stylesheet" type="text/css" href="fancy.css">
+	</Head>
+	
+	<Body>
+	<h1 align="center">--Benjamin Young--</h2>
+	<h2 align="center">Machine Code N-gram Statistical Analysis and Application.</h2>
+
+	<p><a href="https://github.com/nebyoung/Senior_Project">Github repo of Project</a></p>
+	<p><a href="about.html">About the Website</a></p>
+	<br />
+	<Br />
+	
+	<ul align="center" style="list-style-type:none">
+		<li>To obtain machine code, run these linux commands</li>
+		<li>gcc -S -o Project.c</li>
+		<li>gcc -o project.o project.s</li>
+	</ul>
+	
+	<p align="center">Please submit your applications machine code via a .txt file.</p>
+	
+	<form align="center" action="">
+		<input type="file" name="Machine_Code" id="fileinput" accept=".txt">
+		<input type="submit" value="Analyze" id="InputFile" onclick="runScript(fileinput)">
+	</form>
+	
+	
+	<p id="demo">HELLOEOEOEO</p>
+	
+	<script src="test.js"></script>
+	
+	
+	<script>
+		function runScript(event)
+		{
+			myPrint(event.files);
+		}
+	</script>
+	
+	</Body>
+</html>
