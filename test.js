@@ -62,6 +62,8 @@ function indexOf(letters, code)
 	return -1;
 }
 
+
+
 function singleFrequency(letters, text)
 {
 	//begin freq analysis
@@ -123,15 +125,15 @@ function doubleFrequency(letters, text)
 			count[index] = 0;
 		}
 	}
-
+	alert("counting");
 	var index = 0;
-	for (var i = 0; i < length - 1; i++)
+	for (var i = 0; i < array.length - 1; i++)
 	{
 		//index = doubleLetters.indexOf(array[i] + array[i + 1]);
 		index = indexOf(doubleLetters, (array[i] + array[i + 1]));
 		count[index]++;
 	}
-	
+	alert("done counting");
 	for (var i = 0; i < count.length - 1; i++)
 	{
 		if (count[i] == 0) continue;
@@ -176,17 +178,17 @@ function tripleFrequency(letters, text)
 		}
 		alert("starting to count");
 		var index = 0;
-		for (var i = 0; i < lengthCubed - 2; i++)
+		for (var i = 0; i < array.length - 2; i++)
 		{
 			//index = tripleLetters.indexOf(array[i] + array[i + 1] + array[i + 2]);
-			if (i % 10000 == 0) alert(i);
+			//if (i % 10000 == 0) alert(i + " " + (array[i] + array[i + 1] + array[i + 2]));
 			index = indexOf(tripleLetters, (array[i] + array[i + 1] + array[i + 2]));
 			count[index]++;
 		}
 		alert("done counting");
-		for (var i = 0; i < count.length - 1; i++)
+		for (var i = 0; i < count.length; i++)
 		{
-			//if (count[i] == 0) continue;
+			if (count[i] == 0) continue;
 			alert(i + " : " + tripleLetters[i] + ": " + count[i]); //print frequency of each hex
 		}
 	}
