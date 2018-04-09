@@ -261,30 +261,19 @@ function tripleFrequency(letters, text)
 	var tripleLetters = [];
 
 	try {
-		for (var i = 0; i < lengthSingle; i++)
-		{
-			Iindex = i * lengthSquared;
-			Ichar = letters[i];
-			for (var j = 0; j < lengthSingle; j++)
-			{
-				Jindex = j * lengthSingle;
-				Jchar = letters[j];
-				for (var k = 0; k < lengthSingle; k++)
-				{
-					var index = Iindex + Jindex + k;
-					tripleLetters[index] = Ichar + Jchar + letters[k];
-					count[index] = 0;
-				}
-			}
-		}
 		var index = 0;
 		for (var i = 0; i < array.length - 2; i++)
 		{
-			index = indexOf(tripleLetters, (array[i] + array[i + 1] + array[i + 2]));
-			count[index]++;
+			var temp = (array[i] + array[i + 1] + array[i + 2]);
+			index = tripleLetters.indexOf(temp);
+			if (index == -1)
+			{
+				tripleLetters[tripleLetters.length] = temp;
+				count[tripleLetters.length] = 1;
+			}
+			else count[index]++;
 		}
-		var trimmedArr = removeUnused(count, tripleLetters);
-		var tmp = quickSort(trimmedArr[0], trimmedArr[1], 0, trimmedArr[0].length - 1);
+		var tmp = quickSort(count, tripleLetters, 0, count.length - 1);
 		var sortedCount = tmp[0];
 		var sortedChars = tmp[1];
 		index = 0;
