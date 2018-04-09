@@ -1,12 +1,15 @@
 
 function myPrint(evt)
 {
+	div = document.getElementById('replaceme');
+	console.log(div);
+	div.innerHTML = "WORKING";
 	var f = evt[0];
 	if (f) {
 		var r = new FileReader();
 		r.onload = function(e) {
 			var contents = e.target.result;
-			saveFrequency(singleFrequency(letters, contents), doubleFrequency(letters, contents), tripleFrequency(letters, contents));
+			saveFrequency(singleFrequency(letters, contents), doubleFrequency(letters, contents), tripleFrequency(letters, contents), fourFrequency(letters, contents));
 
 		}
 		r.readAsText(f);
@@ -28,10 +31,11 @@ function myPrint(evt)
 	//end list of machine code hex values
 }
 
-function saveFrequency(single, double, triple)
+function saveFrequency(single, double, triple, four)
 {
 	var leftString = "";
 	var midString = "";
+	var midrightString = "";
 	var rightString = "";
 	for (var i = 0; i < single.length; i++)
 	{
@@ -43,7 +47,11 @@ function saveFrequency(single, double, triple)
 	}
 	for (var i = 0; i < triple.length; i++)
 	{
-		rightString += "<li>" + triple[i] + "</li>";
+		midrightString += "<li>" + triple[i] + "</li>";
+	}
+	for (var i = 0; i < four.length; i++)
+	{
+		rightString += "<li>" + four[i] + "</li>";
 	}
 	var div = document.getElementById('leftCol');
 	console.log(div);
@@ -51,6 +59,9 @@ function saveFrequency(single, double, triple)
 	div = document.getElementById('middleCol');
 	console.log(div);
 	div.innerHTML = midString;
+	div = document.getElementById('middlerightCol');
+	console.log(div);
+	div.innerHTML = midrightString;
 	div = document.getElementById('rightCol');
 	console.log(div);
 	div.innerHTML = rightString;
@@ -283,6 +294,54 @@ function tripleFrequency(letters, text)
 			finalArray[index] = temp;
 			index++;
 		}
+		tripleLetters = [];
+		return finalArray;
+	}
+	catch (ex)
+	{
+		alert(ex.message);
+	}
+}
+
+function fourFrequency(letters, text)
+{
+	var array = text.split(" ");
+	var finalArray = [];
+	var count = [];
+	var lengthSingle = letters.length;
+	var lengthSquared = lengthSingle * lengthSingle;
+	var lengthCubed = lengthSingle * lengthSquared;
+	var lengthFour = lengthSquared * lengthSquared;
+	var Iindex = 0;
+	var Ichar = "";
+	var Jindex = 0;
+	var Jchar = "";
+	var fourLetters = [];
+
+	try {
+		var index = 0;
+		for (var i = 0; i < array.length - 3; i++)
+		{
+			var temp = (array[i] + array[i + 1] + array[i + 2] + array[i + 3]);
+			index = fourLetters.indexOf(temp);
+			if (index == -1)
+			{
+				fourLetters[fourLetters.length] = temp;
+				count[fourLetters.length] = 1;
+			}
+			else count[index]++;
+		}
+		var tmp = quickSort(count, fourLetters, 0, count.length - 1);
+		var sortedCount = tmp[0];
+		var sortedChars = tmp[1];
+		index = 0;
+		for (var i = 0; i < sortedCount.length; i++)
+		{
+			var temp = (i + " : " + sortedChars[i] + ": " + sortedCount[i]);
+			finalArray[index] = temp;
+			index++;
+		}
+		fourLetters = [];
 		return finalArray;
 	}
 	catch (ex)
