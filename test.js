@@ -1,16 +1,22 @@
+String.prototype.splice = function(idx, rem, str) {
+    return this.slice(0, idx) + str + this.slice(idx + Math.abs(rem));
+};
 
 function myPrint(evt)
 {
+	var gramCount = 6; //CHANGE THIS TO INCREASE GRAM ANALYSIS
 	div = document.getElementById('replaceme');
 	console.log(div);
-	div.innerHTML = "WORKING";
+	div.innerHTML = "Index : Machine Code Set : Frequency";
 	var f = evt[0];
 	if (f) {
 		var r = new FileReader();
 		r.onload = function(e) {
 			var contents = e.target.result;
-			saveFrequency(singleFrequency(letters, contents), doubleFrequency(letters, contents), tripleFrequency(letters, contents), fourFrequency(letters, contents));
-
+			for (var i = 1; i <= gramCount; i++)
+			{
+				printFrequency(Frequency(letters, contents, i), i);
+			}
 		}
 		r.readAsText(f);
 	} else {
@@ -27,56 +33,29 @@ function myPrint(evt)
 			letters[index] = hexChars[i] + hexChars[j];
 		}
 	}
-
-	//end list of machine code hex values
 }
 
-function saveFrequency(single, double, triple, four)
+function printFrequency(array, gram)
 {
-	var leftString = "";
-	var midString = "";
-	var midrightString = "";
-	var rightString = "";
-	for (var i = 0; i < single.length; i++)
+	var string = "<li>" + gram + "-Gram</li>";
+	for (var i = 0; i < array.length; i++)
 	{
-		leftString += "<li>" + single[i] + "</li>";
+		string += "<li>" + array[i] + "</li>";
 	}
-	for (var i = 0; i < double.length; i++)
-	{
-		midString += "<li>" + double[i] + "</li>";
-	}
-	for (var i = 0; i < triple.length; i++)
-	{
-		midrightString += "<li>" + triple[i] + "</li>";
-	}
-	for (var i = 0; i < four.length; i++)
-	{
-		rightString += "<li>" + four[i] + "</li>";
-	}
-	var div = document.getElementById('leftCol');
+	var div = document.getElementById(gram);
 	console.log(div);
-	div.innerHTML = leftString;
-	div = document.getElementById('middleCol');
-	console.log(div);
-	div.innerHTML = midString;
-	div = document.getElementById('middlerightCol');
-	console.log(div);
-	div.innerHTML = midrightString;
-	div = document.getElementById('rightCol');
-	console.log(div);
-	div.innerHTML = rightString;
-
+	div.innerHTML = string;
 }
 
-
-function removeUnused(count, letters)
+function removeUnused(count, letters) //function not called but could be useful for later
 {
+	var MINIMUM_COUNT = 1;
 	var newCount = [];
 	var newLetters = [];
 	var index = 0;
 	for (var i = 0; i < count.length; i++)
 	{
-		if (count[i] == 0) continue;
+		if (count[i] <= MINIMUM_COUNT) continue;
 		else
 		{
 			newCount[index] = count[i];
@@ -90,29 +69,6 @@ function removeUnused(count, letters)
 	return returnArr;
 }
 
-
-function indexOf(letters, code)
-{
-	var start = 0;
-	var end = letters.length;
-	var mid = 0;
-	//should only go lg2(letters.length) times but this guarantees a return just in case
-	for (var i = 0; i < letters.length / 2; i++)
-	{
-		mid = Math.round((start + end) / 2);
-		if (letters[mid] == code)
-		{
-			return mid;
-		}
-		else if (letters[mid] > code)
-		{
-			end = mid - 1;
-			continue;
-		}
-		else start = mid + 1;
-	}
-	return -1;
-}
 
 function swap(items, firstIndex, secondIndex){
     var temp = items[firstIndex];
@@ -160,177 +116,42 @@ function quickSort(items, letters, left, right) {
 }
 
 
-function singleFrequency(letters, text)
+
+function Frequency(letters, text, gram)
 {
 	var array = text.split(" ");
 	var finalArray = [];
 	var count = [];
-	var singleLetters = letters;
+	var Letters = [];
 
 	try {
-		for (var i = 0; i < singleLetters.length; i++)
-		{
-				count[i] = 0;
-		}
 		var index = 0;
-		for (var i = 0; i < array.length; i++)
+		for (var i = 0; i < array.length - gram + 1; i++)
 		{
-			index = indexOf(singleLetters, (array[i]));
-			count[index]++;
-		}
-		var trimmedArr = removeUnused(count, singleLetters);
-		var tmp = quickSort(trimmedArr[0], trimmedArr[1], 0, trimmedArr[0].length - 1);
-		var sortedCount = tmp[0];
-		var sortedChars = tmp[1];
-		index = 0;
-		for (var i = 0; i < sortedCount.length; i++)
-		{
-			var temp = (i + " : " + sortedChars[i] + ": " + sortedCount[i]);
-			finalArray[index] = temp;
-			index++;
-		}
-		return finalArray;
-	}
-	catch (ex)
-	{
-		alert(ex.message);
-	}
-}
-
-function doubleFrequency(letters, text)
-{
-	var array = text.split(" ");
-	var finalArray = [];
-	var count = [];
-	var lengthSingle = letters.length;
-	var lengthSquared = lengthSingle * lengthSingle;
-	var Iindex = 0;
-	var Ichar = "";
-	var doubleLetters = [];
-
-	try {
-		for (var i = 0; i < lengthSingle; i++)
-		{
-			Iindex = i * lengthSingle;
-			Ichar = letters[i];
-			for (var j = 0; j < lengthSingle; j++)
+			var temp = "";
+			for (var j = 0; j < gram; j++)
 			{
-				var index = Iindex + j;
-				doubleLetters[index] = Ichar + letters[j];
-				count[index] = 0;
+				temp += array[i + j];
 			}
-		}
-		var index = 0;
-		for (var i = 0; i < array.length - 1; i++)
-		{
-			index = indexOf(doubleLetters, (array[i] + array[i + 1]));
-			count[index]++;
-		}
-		var trimmedArr = removeUnused(count, doubleLetters);
-		var tmp = quickSort(trimmedArr[0], trimmedArr[1], 0, trimmedArr[0].length - 1);
-		var sortedCount = tmp[0];
-		var sortedChars = tmp[1];
-		index = 0;
-		for (var i = 0; i < sortedCount.length; i++)
-		{
-			var temp = (i + " : " + sortedChars[i] + ": " + sortedCount[i]);
-			finalArray[index] = temp;
-			index++;
-		}
-		return finalArray;
-	}
-	catch (ex)
-	{
-		alert(ex.message);
-	}
-}
-
-
-function tripleFrequency(letters, text)
-{
-	var array = text.split(" ");
-	var finalArray = [];
-	var count = [];
-	var lengthSingle = letters.length;
-	var lengthSquared = lengthSingle * lengthSingle;
-	var lengthCubed = lengthSingle * lengthSquared;
-	var Iindex = 0;
-	var Ichar = "";
-	var Jindex = 0;
-	var Jchar = "";
-	var tripleLetters = [];
-
-	try {
-		var index = 0;
-		for (var i = 0; i < array.length - 2; i++)
-		{
-			var temp = (array[i] + array[i + 1] + array[i + 2]);
-			index = tripleLetters.indexOf(temp);
+			index = Letters.indexOf(temp);
 			if (index == -1)
 			{
-				tripleLetters[tripleLetters.length] = temp;
-				count[tripleLetters.length] = 1;
+				Letters[Letters.length] = temp;
+				count[Letters.length] = 1;
 			}
 			else count[index]++;
 		}
-		var tmp = quickSort(count, tripleLetters, 0, count.length - 1);
+		var tmp = quickSort(count, Letters, 0, count.length - 1);
 		var sortedCount = tmp[0];
 		var sortedChars = tmp[1];
 		index = 0;
-		for (var i = 0; i < sortedCount.length; i++)
+		for (var i = 0; i < sortedChars.length; i++)
 		{
 			var temp = (i + " : " + sortedChars[i] + ": " + sortedCount[i]);
 			finalArray[index] = temp;
 			index++;
 		}
-		tripleLetters = [];
-		return finalArray;
-	}
-	catch (ex)
-	{
-		alert(ex.message);
-	}
-}
-
-function fourFrequency(letters, text)
-{
-	var array = text.split(" ");
-	var finalArray = [];
-	var count = [];
-	var lengthSingle = letters.length;
-	var lengthSquared = lengthSingle * lengthSingle;
-	var lengthCubed = lengthSingle * lengthSquared;
-	var lengthFour = lengthSquared * lengthSquared;
-	var Iindex = 0;
-	var Ichar = "";
-	var Jindex = 0;
-	var Jchar = "";
-	var fourLetters = [];
-
-	try {
-		var index = 0;
-		for (var i = 0; i < array.length - 3; i++)
-		{
-			var temp = (array[i] + array[i + 1] + array[i + 2] + array[i + 3]);
-			index = fourLetters.indexOf(temp);
-			if (index == -1)
-			{
-				fourLetters[fourLetters.length] = temp;
-				count[fourLetters.length] = 1;
-			}
-			else count[index]++;
-		}
-		var tmp = quickSort(count, fourLetters, 0, count.length - 1);
-		var sortedCount = tmp[0];
-		var sortedChars = tmp[1];
-		index = 0;
-		for (var i = 0; i < sortedCount.length; i++)
-		{
-			var temp = (i + " : " + sortedChars[i] + ": " + sortedCount[i]);
-			finalArray[index] = temp;
-			index++;
-		}
-		fourLetters = [];
+		Letters = [];
 		return finalArray;
 	}
 	catch (ex)
