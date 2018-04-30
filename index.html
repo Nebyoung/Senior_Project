@@ -16,9 +16,8 @@
 
 	<ul align="center" style="list-style-type:none">
 		<li>To obtain machine code, run these linux commands</li>
-		<li>gcc -S -o Project.c</li>
-		<li>gcc -o project.o project.s</li>
-		<li>Please submit the project.o file now created</li>
+		<li>gcc -o alpha.o File.c; od -t x1 alpha.o | cut -c8- > beta.txt; tr -d "\n" < beta.txt > final.txt; rm beta.txt;</li>
+		<li>Now submit the final.txt file created in the same directory</li>
 	</ul>
 
 	<p align="center" id="replaceme">Please submit your applications machine code via a .txt file.</p>
@@ -28,12 +27,16 @@
 		<input type="button" value="Analyze" id="InputFile" onclick="myPrint(fileinput.files)">
 	</form>
 
-	<div id="1" style="float: left; width : 15%;"><ul></ul></div>
-	<div id="2" style="float: left; width : 15%;"><ul></ul></div>
-	<div id="3" style="float: left; width : 15%;"><ul></ul></div>
-	<div id="4" style="float: left; width : 15%;"><ul></ul></div>
-	<div id="5" style="float: left; width : 15%;"><ul></ul></div>	
-	<div id="6" style="float: left; width : 15%;"><ul></ul></div>
+	<div id="1" style="float: left; width : 12%;"><ul></ul></div>
+	<div id="2" style="float: left; width : 12%;"><ul></ul></div>
+	<div id="3" style="float: left; width : 12%;"><ul></ul></div>
+	<div id="4" style="float: left; width : 12%;"><ul></ul></div>
+	<div id="5" style="float: left; width : 12%;"><ul></ul></div>
+	<div id="6" style="float: left; width : 12%;"><ul></ul></div>
+	<div id="7" style="float: left; width : 12%;"><ul></ul></div>
+	<div id="8" style="float: left; width : 12%;"><ul></ul></div>
+
+
 
 
 

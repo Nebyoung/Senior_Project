@@ -4,7 +4,7 @@ String.prototype.splice = function(idx, rem, str) {
 
 function myPrint(evt)
 {
-	var gramCount = 6; //CHANGE THIS TO INCREASE GRAM ANALYSIS
+	var gramCount = 8; //CHANGE THIS TO INCREASE GRAM ANALYSIS
 	div = document.getElementById('replaceme');
 	console.log(div);
 	div.innerHTML = "Index : Machine Code Set : Frequency";
@@ -47,7 +47,7 @@ function printFrequency(array, gram)
 	div.innerHTML = string;
 }
 
-function removeUnused(count, letters) //function not called but could be useful for later
+function removeUnused(count, letters) //function not called but could be useful for later purposes
 {
 	var MINIMUM_COUNT = 1;
 	var newCount = [];
@@ -145,9 +145,18 @@ function Frequency(letters, text, gram)
 		var sortedCount = tmp[0];
 		var sortedChars = tmp[1];
 		index = 0;
+    var total = 0;
+    for (var i = 0; i < sortedChars.length; i++)
+    {
+        if (sortedCount[i] == undefined || sortedCount[i] == NaN) continue;
+        total += sortedCount[i];
+
+    }
+    //alert(total);
 		for (var i = 0; i < sortedChars.length; i++)
 		{
-			var temp = (i + " : " + sortedChars[i] + ": " + sortedCount[i]);
+      if (sortedChars[i] == undefined || sortedChars[i] == '' || sortedCount[i] == NaN || sortedCount[i] == undefined) continue;
+			var temp = (sortedChars[i] + ", " + (sortedCount[i] * 100 / total).toFixed(2) + "%");
 			finalArray[index] = temp;
 			index++;
 		}
