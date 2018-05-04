@@ -1,0 +1,46 @@
+body {
+	background:#D1D1D1;
+}
+head {
+	color: #512888;
+	font-siize: 42px;
+}
+h1 {
+	color: #500888;
+	font-size: 48px;
+}
+h2 {
+	color: Black;
+	font-size: 36px;
+}
+h3 {
+	color: #512888;
+	font-size: 24px;
+}
+h4 {
+	color: Black;
+	font-size: 24px;
+}
+a:link{
+	font-size: 18px;
+	color: Black;
+}
+a:visited {
+	color: #500888;
+}
+a:hover {
+	color:  DarkGrey;
+}
+li {
+	font-size: 18px;
+}
+p {
+	font-size: 18px;
+}
+
+div.sub, iframe {
+    margin: 0 auto;
+		display:block;
+    background-color: #777;
+
+}
